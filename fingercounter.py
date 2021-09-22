@@ -13,12 +13,12 @@ tipIDS = [4,8,12,16,20]
 while True:
     success, img = cap.read()
     img = detector.findHands(img)
-    lmList = detector.findPosition(img, draw=False)
+    fingers = []
+    rightHand = False
+    lmList = detector.findPosition(img, draw=True)
     #print(lmList)
-
+    #print(detector.findPosition.landmark)
     if len(lmList) != 0:
-        fingers = []
-        rightHand = False
         #thumb
         if lmList[5][1] > lmList[17][1]:
             rightHand = True
@@ -40,12 +40,9 @@ while True:
                 fingers.append(0)
         print(fingers)
 
-        totalFingers = fingers.count(1)
-        #print(totalFingers)
-        if rightHand:
-            cv2.putText(img, f'Right Hand Fingers: {totalFingers}', (10,70), cv2.FONT_HERSHEY_COMPLEX, 1, (255,255,255), 3)
-        else:
-            cv2.putText(img, f'Left Hand Fingers: {totalFingers}', (10,70), cv2.FONT_HERSHEY_COMPLEX, 1, (255,255,255), 3)
+    totalFingers = fingers.count(1)
+    #print(totalFingers)
+    cv2.putText(img, f'Fingers: {totalFingers}', (10,70), cv2.FONT_HERSHEY_COMPLEX, 1, (255,255,255), 3)
     cTime = time.time()
     fps = 1/(cTime-pTime)
     pTime = cTime

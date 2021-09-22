@@ -26,17 +26,32 @@ class handDetector():
 
     def findPosition(self, img, handNo=0,draw=True):
         lmList = []
+        if self.results.multi_handedness:
+            label = self.results.multi_handedness[handNo].classification[0].label  # label gives if hand is left or right
+            #account for inversion in webcams
+            if label == "Left":
+                label = "Right"
+            elif label == "Right":
+                label = "Left"
+                
         if self.results.multi_hand_landmarks:
             myHand = self.results.multi_hand_landmarks[handNo]
-
             for id, lm in enumerate(myHand.landmark):
                 #print(id,lm)
                 h, w, c = img.shape
                 cx, cy = int(lm.x*w), int(lm.y*h)
-                lmList.append([id, cx, cy])
+                lmList.append([id, cx, cy, label])
                 if draw:
-                    cv2.circle(img, (cx,cy), 5, (255,0,255), cv2.FILLED)
+                    cv2.circle(img, (cx,cy), 7, (236,252,3))
         return lmList
+    
+    def amountHands(self, img):
+        amount = 0
+        if self.results.multi_hand_landmarks:
+            for hand in enumerate(self.results.multi_hand_landmarks):
+                #print("Hand")
+                amount += 1
+        return amount
 
 def main():
     
@@ -55,7 +70,7 @@ def main():
             print(lmList[4])
         #imgRGB = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
         #results = hands.process(imgRGB)
-
+        print(detector.amountHands(img))
         cTime = time.time()
         fps = 1/(cTime-pTime)
         pTime = cTime
