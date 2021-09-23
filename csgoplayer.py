@@ -117,7 +117,14 @@ def mouse_run(wCam, hCam, smoothening, plocX, plocY, clocX, clocY, wScr, hScr, f
                 y3 = np.interp(y1, (frameR, hCam - frameR), (0, hScr))
                 clocX = plocX + (x3 - plocX) / smoothening
                 clocY = plocY + (y3 - plocY) / smoothening
-
+                # error check so that input is 1 pixel less than in-game resolution
+                csgoW, csgoH = 1279, 959
+                if clocX > csgoW:
+                    clocX = csgoW
+                clocY = plocY + (y3 - plocY) / smoothening
+                if clocY > csgoH:
+                    clocY = csgoH
+                print(clocX, clocY)
                 autopy.mouse.move(clocX, clocY)
                 cv2.circle(img2, (x1, y1), 15, (255, 0, 255), cv2.FILLED)
                 plocX, plocY = clocX, clocY
@@ -127,7 +134,11 @@ def mouse_run(wCam, hCam, smoothening, plocX, plocY, clocX, clocY, wScr, hScr, f
                     x3 = np.interp(x1, (frameR, wCam - frameR), (0, wScr))
                     y3 = np.interp(y1, (frameR, hCam - frameR), (0, hScr))
                     clocX = plocX + (x3 - plocX) / smoothening
+                    if clocX > 1279:
+                        clocX = 1279
                     clocY = plocY + (y3 - plocY) / smoothening
+                    if clocY > 959:
+                        clocY = 959
 
                     autopy.mouse.move(clocX, clocY)
                     cv2.circle(img2, (x1, y1), 15, (255, 0, 255), cv2.FILLED)
@@ -155,7 +166,7 @@ if __name__ == '__main__':
     aLow, aHigh = 50, 150
     dLow, dHigh = 350, 450
     wCam, hCam = 640, 720
-    smoothening = 7
+    smoothening = 1
     pTime = 0
     plocX, plocY = 0, 0
     clocX, clocY = 0, 0
