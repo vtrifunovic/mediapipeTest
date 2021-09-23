@@ -18,6 +18,7 @@ wScr, hScr = autopy.screen.size()
 frameR = 200
 while True:
     success, img = cap.read()
+    img = cv2.flip(img, 1)
     img = detector.findHands(img)
     lmList = detector.findPosition(img)
 
@@ -34,7 +35,7 @@ while True:
             clocX = plocX + (x3-plocX)/smoothening
             clocY = plocY + (y3-plocY)/smoothening
 
-            autopy.mouse.move(wScr - clocX, clocY)
+            autopy.mouse.move(clocX, clocY)
             cv2.circle(img, (x1, y1), 15, (255, 0, 255), cv2.FILLED)
             plocX, plocY = clocX, clocY
         elif fingers[1] == 1 and fingers[2] == 1:
@@ -45,7 +46,7 @@ while True:
                 clocX = plocX + (x3 - plocX) / smoothening
                 clocY = plocY + (y3 - plocY) / smoothening
 
-                autopy.mouse.move(wScr - clocX, clocY)
+                autopy.mouse.move(clocX, clocY)
                 cv2.circle(img, (x1, y1), 15, (255, 0, 255), cv2.FILLED)
                 plocX, plocY = clocX, clocY
                 cv2.circle(img, (lineInfo[4], lineInfo[5]), 15, (0, 255, 0), cv2.FILLED)
