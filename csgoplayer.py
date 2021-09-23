@@ -1,5 +1,4 @@
 import cv2
-import time
 import HandTrackingModule as htm
 import HandTrackingModule2 as htm2
 import keyboard
@@ -152,14 +151,10 @@ if __name__ == '__main__':
     detector = htm.handDetector(detectionCon=0.75)
     detector2 = htm2.handDetector(detectionCon=0.75, maxHands=1)
     tipIDS = [4, 8, 12, 16, 20]
-    wLow = 200
-    wHigh = 300
-    aLow = 50
-    aHigh = 150
-    dLow = 350
-    dHigh = 450
-    wCam = 640
-    hCam = 720
+    wLow, wHigh = 200, 300
+    aLow, aHigh = 50, 150
+    dLow, dHigh = 350, 450
+    wCam, hCam = 640, 720
     smoothening = 7
     pTime = 0
     plocX, plocY = 0, 0
