@@ -15,6 +15,7 @@ Additional required dependecnies for this file:
 - numpy
 - comtypes
 - pycaw
+- comtypes
 
 File will interpolate the distance between the index and thumb and adjust the computer's volume based off of the distance
 
