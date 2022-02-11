@@ -1,5 +1,5 @@
 # mediapipeTest
-Different CVIP programs based around around mediapipe's hand tracking
+Different CVIP programs based around mediapipe's hand tracking
 
 # Main required dependencies
 - mediapipe
